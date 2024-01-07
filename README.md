@@ -24,7 +24,7 @@ Here you can put a simple description and anything you want really!
 | Day | Part One | Part Two |
 | --- | :------: | :------: |
 | [Day 1](/2023/day01) | `375.76 μs` | `635.95 μs`|
-| [Day 2](/2023/day02) | | |
+| [Day 2](/2023/day02) | `954.68 μs` | `936.63 μs`|
 | [Day 3](/2023/day03) | | |
 | [Day 4](/2023/day04) | | |
 | [Day 5](/2023/day05) | | |
