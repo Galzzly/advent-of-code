@@ -55,9 +55,8 @@ func IntsLineByComma(file string) (nums []int) {
 	return
 }
 
-func RowIntsByLine(file string) (nums [][]int) {
-	f := ReadFile(file)
-	lines := strings.Split(strings.TrimSpace(string(f)), "\n")
+func RowIntsByLine(input string) (nums [][]int) {
+	lines := strings.Split(strings.TrimSpace(input), "\n")
 	nums = make([][]int, len(lines))
 	for l := range lines {
 		if len(lines[l]) == 0 {

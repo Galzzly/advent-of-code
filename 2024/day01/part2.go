@@ -1,7 +1,7 @@
 package main
 
 import (
-	"strconv"
+	"aocli/utils"
 	"strings"
 )
 
@@ -11,8 +11,8 @@ func doPartTwo(input string) int {
 	L := make([]int, len(lines))
 	for i, line := range lines {
 		n := strings.Split(line, "   ")
-		L[i], _ = strconv.Atoi(n[0])
-		Rn, _ := strconv.Atoi(n[1])
+		L[i] = utils.Atoi(n[0])
+		Rn := utils.Atoi(n[1])
 		if _, ok := R[Rn]; !ok {
 			R[Rn] = 0
 		}

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"aocli/utils"
 	"sort"
-	"strconv"
 	"strings"
 )
 
@@ -13,18 +13,14 @@ func doPartOne(input string) int {
 	nums[1] = make([]int, len(lines))
 	for i, line := range lines {
 		n := strings.Split(line, "   ")
-		nums[0][i], _ = strconv.Atoi(n[0])
-		nums[1][i], _ = strconv.Atoi(n[1])
+		nums[0][i] = utils.Atoi(n[0])
+		nums[1][i] = utils.Atoi(n[1])
 	}
 	sort.Ints(nums[0])
 	sort.Ints(nums[1])
 	var res int
 	for i := range len(lines) {
-		d := nums[0][i] - nums[1][i]
-		if d < 0 {
-			d = -d
-		}
-		res += d
+		res += utils.Abs(nums[0][i] - nums[1][i])
 	}
 	return res
 }
