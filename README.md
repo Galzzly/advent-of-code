@@ -1,5 +1,5 @@
 ![](https://img.shields.io/github/last-commit/Galzzly/advent-of-code?style=flat-square)
-![](https://img.shields.io/badge/day%20📅-%!s(int=1)-blue)
+![](https://img.shields.io/badge/day%20📅-%!s(int=9)-blue)
 ![](https://img.shields.io/badge/stars%20⭐-2-yellow)
 ![](https://img.shields.io/badge/days%20completed-1-red)
 
