@@ -12,9 +12,8 @@ func ReadFile(file string) []byte {
 	return f
 }
 
-func FileLineByLine(file string) []string {
-	f := ReadFile(file)
-	return strings.Split(strings.TrimSpace(string(f)), "\n")
+func FileLineByLine(input string) []string {
+	return strings.Split(strings.TrimSpace(input), "\n")
 }
 
 func FileSingleLine(file string) string {
