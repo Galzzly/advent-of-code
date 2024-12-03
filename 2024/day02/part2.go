@@ -1,15 +1,15 @@
 package main
 
 import (
-	"aocli/utils"
 	"aocli/utils/reader"
+	"slices"
 )
 
 func doPartTwo(input string) int {
 	numlist := reader.RowIntsByLine(input)
 	var res int
 	for i, nums := range numlist {
-		if utils.FindInSlice(successful, i) {
+		if slices.Contains[[]int](successful, i) {
 			res++
 			continue
 		}
