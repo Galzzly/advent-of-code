@@ -1,27 +1,32 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
+	"strings"
 )
 
 func doPartTwo(input string) int {
-	regex := regexp.MustCompile(`mul\(\d*,\d*\)|do\(\)|don't\(\)`)
-	var res int
+	input = strings.ReplaceAll(input, "\n", "")
+	do_reg := map[bool]string{false: "do\\(\\)", true: "don't\\(\\)"}
 	do := true
-	for _, m := range regex.FindAllString(input, -1) {
-		switch m {
-		case "do()":
-			do = true
-		case "don't()":
-			do = false
-		default:
+	var line string
+	for {
+		regex := regexp.MustCompile(do_reg[do])
+		idx := regex.FindStringIndex(input)
+		if idx == nil {
 			if do {
-				var a, b int
-				fmt.Sscanf(m, "mul(%d,%d)", &a, &b)
-				res += a * b
+				line += input
 			}
+			break
 		}
+		if do {
+			line += input[:idx[0]]
+			input = input[idx[1]:]
+			do = !do
+			continue
+		}
+		input = input[idx[1]:]
+		do = !do
 	}
-	return res
+	return doPartOne(line)
 }

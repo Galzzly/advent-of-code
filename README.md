@@ -26,7 +26,7 @@ Here you can put a simple description and anything you want really!
 | --- | :------: | :------: |
 | [Day 1](/2024/day01) | `69.85 μs` | `96.99 μs`|
 | [Day 2](/2024/day02) | `135.72 μs` | `739.99 ms`|
-| [Day 3](/2024/day03) | `659.74 μs` | `740.74 μs`|
+| [Day 3](/2024/day03) | `662.72 μs` | `315.15 μs`|
 | [Day 4](/2024/day04) | | |
 | [Day 5](/2024/day05) | | |
 | [Day 6](/2024/day06) | | |
