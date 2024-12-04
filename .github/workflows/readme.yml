@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Change this to your default branch
     paths-ignore:
-      - '**[skip ci]**'
+      
 
 jobs:
   run_go:
@@ -18,7 +18,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.21.5  # Specify the Go version you need
+        go-version: 1.23.3  # Specify the Go version you need
 
     - name: Generate readmes
       run: |
