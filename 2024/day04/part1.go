@@ -3,7 +3,6 @@ package main
 import (
 	"aocli/utils/reader"
 	"image"
-	"sync"
 )
 
 type Mapper map[image.Point]rune
@@ -19,24 +18,11 @@ var letters []rune = []rune("MAS")
 func doPartOne(input string) int {
 	var mapper Mapper
 	mapper, allX := makeMap(reader.FileLineByLine(input), 'X')
-	var wg sync.WaitGroup
-	var ch = make(chan int, len(allX)*4)
+	var res int
 	for _, i := range allX {
 		for _, d := range delta {
-			wg.Add(1)
-			go func(i image.Point, d image.Point, wg *sync.WaitGroup, ch chan int) {
-				defer wg.Done()
-				ch <- mapper.checkXmas(i, d)
-			}(i, d, &wg, ch)
+			res += mapper.checkXmas(i, d)
 		}
-	}
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-	var res int
-	for out := range ch {
-		res += out
 	}
 	return res
 }
