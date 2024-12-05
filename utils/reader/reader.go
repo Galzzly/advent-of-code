@@ -21,9 +21,8 @@ func FileSingleLine(file string) string {
 	return strings.Split(strings.TrimSpace(string(f)), "\n")[0]
 }
 
-func FileDoubleLine(file string) []string {
-	f := ReadFile(file)
-	return strings.Split(strings.TrimSpace(string(f)), "\n\n")
+func FileDoubleLine(input string) []string {
+	return strings.Split(strings.TrimSpace(input), "\n\n")
 }
 
 func IntsByLine(file string) (nums []int) {
