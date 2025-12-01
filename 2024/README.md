@@ -1,5 +1,4 @@
 ![](https://img.shields.io/github/last-commit/Galzzly/advent-of-code?style=flat-square)
-![](https://img.shields.io/badge/day%20📅-%!s(int=13)-blue)
 ![](https://img.shields.io/badge/stars%20⭐-0-yellow)
 ![](https://img.shields.io/badge/days%20completed-0-red)
 
@@ -57,3 +56,4 @@ Here you can put a simple description and anything you want really!
 | ---- | ----- |
 | [Advent Of Code 2023](/2023) | 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 |
 | [Advent Of Code 2024](/2024) | 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 |
+| [Advent Of Code 2025](/2025) | 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 🖤 |
