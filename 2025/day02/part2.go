@@ -1,7 +1,6 @@
 package main
 
 import (
-	"aocli/utils"
 	"fmt"
 	"strconv"
 	"strings"
@@ -13,26 +12,47 @@ func doPartTwo(input string) int {
 	for _, line := range lines {
 		var id1, id2 int
 		fmt.Sscanf(line, "%d-%d", &id1, &id2)
-	nextid:
 		for id := id1; id <= id2; id++ {
 			idstring := strconv.Itoa(id)
-			mid := len(idstring) / 2
-			for i := 1; i <= mid; i++ {
-				if len(idstring)%i != 0 {
+			idlen := len(idstring)
+
+			// Single digit always matches
+			if idlen == 1 {
+				ans += id
+				continue
+			}
+
+			// Check if the number can be split into repeating chunks
+			found := false
+			for chunkSize := 1; chunkSize <= idlen/2; chunkSize++ {
+				// Only check divisors of the length
+				if idlen%chunkSize != 0 {
 					continue
 				}
-				chunks := utils.ChunkSlice([]rune(idstring), i)
+
+				// Check if all chunks match the first chunk
 				match := true
-				for i := 1; i < len(chunks); i++ {
-					if string(chunks[i]) != string(chunks[0]) {
-						match = false
+				for pos := chunkSize; pos < idlen; pos += chunkSize {
+					for offset := 0; offset < chunkSize; offset++ {
+						if idstring[offset] != idstring[pos+offset] {
+							match = false
+							break
+						}
+					}
+					if !match {
 						break
 					}
 				}
+
 				if match {
 					ans += id
-					continue nextid
+					found = true
+					break
 				}
+			}
+
+			if found {
+				continue
 			}
 		}
 	}
