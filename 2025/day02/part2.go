@@ -16,14 +16,7 @@ func doPartTwo(input string) int {
 			idstring := strconv.Itoa(id)
 			idlen := len(idstring)
 
-			// Single digit always matches
-			if idlen == 1 {
-				ans += id
-				continue
-			}
-
 			// Check if the number can be split into repeating chunks
-			found := false
 			for chunkSize := 1; chunkSize <= idlen/2; chunkSize++ {
 				// Only check divisors of the length
 				if idlen%chunkSize != 0 {
@@ -46,13 +39,8 @@ func doPartTwo(input string) int {
 
 				if match {
 					ans += id
-					found = true
 					break
 				}
-			}
-
-			if found {
-				continue
 			}
 		}
 	}
