@@ -25,7 +25,7 @@ Here you can put a simple description and anything you want really!
 | Day | Part One | Part Two |
 | --- | :------: | :------: |
 | [Day 1](/2025/day01) | `457.76 μs` | `192.96 μs`|
-| [Day 2](/2025/day02) | `23.61 ms` | `30.62 ms`|
+| [Day 2](/2025/day02) | `23.89 ms` | `31.12 ms`|
 | [Day 3](/2025/day03) | | |
 | [Day 4](/2025/day04) | | |
 | [Day 5](/2025/day05) | | |
