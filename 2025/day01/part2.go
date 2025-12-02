@@ -7,7 +7,13 @@ import (
 
 func doPartTwo(input string) int {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
-	r = r.Move(50)
+
+	// Calculate where we need to move to get to position 50
+	// Since r.Value equals the position, we can calculate the offset
+	currentPos := r.Value.(int)
+	offset := (50 - currentPos + 100) % 100
+	r = r.Move(offset)
+
 	ans := 0
 	for _, line := range lines {
 		num := utils.Atoi(line[1:])

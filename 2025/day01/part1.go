@@ -15,7 +15,7 @@ func doPartOne(input string) int {
 			num = -num
 		}
 		r = r.Move(num)
-		if r.Value == 0 {
+		if r.Value.(int) == 0 {
 			ans++
 		}
 	}
