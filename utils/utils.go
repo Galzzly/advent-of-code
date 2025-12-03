@@ -68,6 +68,21 @@ func Abs[T Number](i T) T {
 	return i
 }
 
+func IntPow(n, m int) int {
+	if m == 0 || n == 0 {
+		return 0
+	}
+	if m == 1 {
+		return n
+	}
+	result := n
+	for i := 2; i <= m; i++ {
+		result *= n
+	}
+	return result
+
+}
+
 func MinMax[T Number](nums []T) (min, max T) {
 	min, max = nums[0], 0
 	for _, n := range nums[1:] {
