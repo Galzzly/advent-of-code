@@ -1,9 +1,11 @@
 package main
 
 import (
+	"aocli/utils/maps"
 	_ "embed"
 	"image"
 	"os"
+	"strings"
 )
 
 //go:embed input.txt
@@ -18,16 +20,22 @@ var delta = []image.Point{
 	{-1, 1}, {0, 1}, {1, 1},
 }
 
+var mapper map[image.Point]rune
+var rect image.Rectangle
+
 func main() {
 	// Check argv if we use test input or not
 	if len(os.Args) > 1 && os.Args[1] == "test" {
 		input = inputTest
 	}
 
+	// Parse input once
+	mapper, rect = maps.MakeImagePointMapRect(strings.Split(strings.TrimSpace(input), "\n"))
+
 	answer := doPartOne(input)
 	println(answer)
 
-	answer = doPartTwo(input)
+	answer = doPartTwo(mapper)
 	println(answer)
 }
 

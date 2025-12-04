@@ -1,13 +1,10 @@
 package main
 
 import (
-	"aocli/utils/maps"
 	"image"
-	"strings"
 )
 
-func doPartTwo(input string) int {
-	mapper, rect := maps.MakeImagePointMapRect(strings.Split(strings.TrimSpace(input), "\n"))
+func doPartTwo(mapper map[image.Point]rune) int {
 	ans := 0
 
 	for {
