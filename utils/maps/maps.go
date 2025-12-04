@@ -26,9 +26,9 @@ func MakeImagePointMap(lines []string) (mapping map[image.Point]rune) {
 	return
 }
 
-func MakeImagPointMapRect(lines []string) (mapping map[image.Point]rune, rect image.Rectangle) {
+func MakeImagePointMapRect(lines []string) (mapping map[image.Point]rune, rect image.Rectangle) {
 	mapping = MakeImagePointMap(lines)
-	rect = image.Rect(0, 0, len(lines[0])-1, len(lines)-1)
+	rect = image.Rect(0, 0, len(lines[0]), len(lines))
 	return
 }
 
