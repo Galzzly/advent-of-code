@@ -27,22 +27,5 @@ func doPartOne(input string) int {
 		}
 		ans += subAns
 	}
-	// mapper, rect := maps.MakeImagePointMapRect(strings.Split(strings.TrimSpace(input), "\n"))
-
-	// ans := 0
-	// for x := 0; x < rect.Max.X; x++ {
-	// 	subAns := utils.Atoi(string(mapper[image.Point{x, 0}]))
-	// 	if mapper[image.Point{x, rect.Max.Y - 1}] == '+' {
-	// 		for y := 1; y < rect.Max.Y-1; y++ {
-	// 			subAns += utils.Atoi(string(mapper[image.Point{x, y}]))
-	// 		}
-	// 		ans += subAns
-	// 		continue
-	// 	}
-	// 	for y := 1; y < rect.Max.Y-1; y++ {
-	// 		subAns *= utils.Atoi(string(mapper[image.Point{x, y}]))
-	// 	}
-	// 	ans += subAns
-	// }
 	return ans
 }
