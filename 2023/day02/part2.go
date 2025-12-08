@@ -1,33 +1,49 @@
 package main
 
 import (
-	"aocli/utils"
-	"fmt"
 	"strings"
 )
 
 func doPartTwo(input string) int {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
-	var res int
+	res := 0
+	
 	for _, line := range lines {
-		subs := strings.Split(strings.Split(line, ": ")[1], "; ")
-		var r, g, b int
-		for _, sub := range subs {
-			for _, s := range strings.Split(sub, ", ") {
-				var n int
-				var C string
-				fmt.Sscanf(s, "%d %s", &n, &C)
-				switch C {
-				case "red":
-					r = utils.Ter(n > r, n, r)
-				case "green":
-					g = utils.Ter(n > g, n, g)
-				case "blue":
-					b = utils.Ter(n > b, n, b)
+		// Skip "Game X: " prefix
+		colonIdx := strings.Index(line, ": ")
+		sets := strings.Split(line[colonIdx+2:], "; ")
+		
+		maxRed, maxGreen, maxBlue := 0, 0, 0
+		
+		for _, set := range sets {
+			cubes := strings.Split(set, ", ")
+			for _, cube := range cubes {
+				spaceIdx := strings.Index(cube, " ")
+				num := 0
+				for i := 0; i < spaceIdx; i++ {
+					num = num*10 + int(cube[i]-'0')
+				}
+				
+				color := cube[spaceIdx+1:]
+				switch color[0] {
+				case 'r': // red
+					if num > maxRed {
+						maxRed = num
+					}
+				case 'g': // green
+					if num > maxGreen {
+						maxGreen = num
+					}
+				case 'b': // blue
+					if num > maxBlue {
+						maxBlue = num
+					}
 				}
 			}
 		}
-		res += r * g * b
+		
+		res += maxRed * maxGreen * maxBlue
 	}
+	
 	return res
 }

@@ -1,70 +1,63 @@
 package main
 
 import (
-	"aocli/utils"
-	"fmt"
 	"strings"
 )
 
-type game struct {
-	id  int
-	rgb []RGB
-}
-type RGB struct {
-	red   int
-	green int
-	blue  int
-}
-
 func doPartOne(input string) int {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
-	var total int
-	var games []game
+	res := 0
+	
 	for _, line := range lines {
-		var rgb []RGB
-		var id int
-		var restofline string
-		s := strings.Split(line, ": ")
-		id = utils.Atoi(strings.Split(s[0], " ")[1])
-		restofline = s[1]
-		subset := strings.Split(restofline, "; ")
-		for _, sub := range subset {
-			var colours RGB
-			s := strings.Split(sub, ", ")
-			for _, s := range s {
-				var num int
-				var colour string
-				fmt.Sscanf(s, "%d %s", &num, &colour)
-				switch colour {
-				case "red":
-					colours.red += num
-				case "green":
-					colours.green += num
-				case "blue":
-					colours.blue += num
+		// Parse game ID and sets
+		colonIdx := strings.Index(line, ": ")
+		gameID := 0
+		for i := 5; i < colonIdx; i++ { // "Game " is 5 chars
+			gameID = gameID*10 + int(line[i]-'0')
+		}
+		
+		// Check if game is valid
+		valid := true
+		sets := strings.Split(line[colonIdx+2:], "; ")
+		
+		for _, set := range sets {
+			cubes := strings.Split(set, ", ")
+			for _, cube := range cubes {
+				spaceIdx := strings.Index(cube, " ")
+				num := 0
+				for i := 0; i < spaceIdx; i++ {
+					num = num*10 + int(cube[i]-'0')
 				}
-				rgb = append(rgb, colours)
+				
+				color := cube[spaceIdx+1:]
+				switch color[0] {
+				case 'r': // red
+					if num > 12 {
+						valid = false
+					}
+				case 'g': // green
+					if num > 13 {
+						valid = false
+					}
+				case 'b': // blue
+					if num > 14 {
+						valid = false
+					}
+				}
+				
+				if !valid {
+					break
+				}
+			}
+			if !valid {
+				break
 			}
 		}
-		total += id
-		games = append(games, game{id, rgb})
-	}
-
-	var res int
-	red := 12
-	green := 13
-	blue := 14
-	res = total
-nextgame:
-	for _, game := range games {
-		for _, rgb := range game.rgb {
-			if rgb.red > red ||
-				rgb.green > green ||
-				rgb.blue > blue {
-				res -= game.id
-				continue nextgame
-			}
+		
+		if valid {
+			res += gameID
 		}
 	}
+	
 	return res
 }
