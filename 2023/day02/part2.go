@@ -7,14 +7,14 @@ import (
 func doPartTwo(input string) int {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 	res := 0
-	
+
 	for _, line := range lines {
 		// Skip "Game X: " prefix
 		colonIdx := strings.Index(line, ": ")
 		sets := strings.Split(line[colonIdx+2:], "; ")
-		
+
 		maxRed, maxGreen, maxBlue := 0, 0, 0
-		
+
 		for _, set := range sets {
 			cubes := strings.Split(set, ", ")
 			for _, cube := range cubes {
@@ -23,7 +23,7 @@ func doPartTwo(input string) int {
 				for i := 0; i < spaceIdx; i++ {
 					num = num*10 + int(cube[i]-'0')
 				}
-				
+
 				color := cube[spaceIdx+1:]
 				switch color[0] {
 				case 'r': // red
@@ -41,9 +41,9 @@ func doPartTwo(input string) int {
 				}
 			}
 		}
-		
+
 		res += maxRed * maxGreen * maxBlue
 	}
-	
+
 	return res
 }
