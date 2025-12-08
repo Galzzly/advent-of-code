@@ -1,6 +1,6 @@
 module aocli
 
-go 1.23.3
+go 1.24.0
 
 require (
 	github.com/caarlos0/env/v9 v9.0.0
@@ -13,7 +13,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.26
 	github.com/spf13/cobra v1.8.0
 	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc
-	golang.org/x/sys v0.15.0
+	golang.org/x/sys v0.38.0
 	golang.org/x/tools v0.16.0
 )
 
@@ -37,8 +37,8 @@ require (
 	github.com/skeema/knownhosts v1.2.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/crypto v0.16.0 // indirect
+	golang.org/x/crypto v0.44.0 // indirect
 	golang.org/x/mod v0.14.0 // indirect
-	golang.org/x/net v0.19.0 // indirect
+	golang.org/x/net v0.47.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
