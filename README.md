@@ -28,7 +28,7 @@ Here you can put a simple description and anything you want really!
 | [Day 2](/2025/day02) | `23.89 ms` | `31.12 ms`|
 | [Day 3](/2025/day03) | `23.25 μs` | `40.77 μs`|
 | [Day 4](/2025/day04) | `1.61 ms` | `36.53 ms`|
-| [Day 5](/2025/day05) | | |
+| [Day 5](/2025/day05) | `85.68 μs` | `2629.00 ns`|
 | [Day 6](/2025/day06) | `78.51 μs` | `51.86 μs`|
 | [Day 7](/2025/day07) | `960.01 μs` | `1.05 ms`|
 | [Day 8](/2025/day08) | `693.30 μs` | `695.12 μs`|
