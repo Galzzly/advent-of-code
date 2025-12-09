@@ -1,52 +1,33 @@
 package main
 
-import (
-	"reflect"
-	"slices"
-)
+import "slices"
 
-func doPartOne(input string) int {
-	hands := getHands(input, false)
-	Counter := func(H Hand) int {
-		C := map[int]int{}
-		for _, c := range H.hand {
-			C[c]++
+func doPartOne() int {
+	// Create a copy for sorting
+	sortedHands := make([]Hand, len(hands))
+	copy(sortedHands, hands)
+	
+	slices.SortFunc(sortedHands, func(a, b Hand) int {
+		// Compare hand strengths
+		sa := getHandStrength(a, false)
+		sb := getHandStrength(b, false)
+		
+		if sa != sb {
+			return sa - sb
 		}
-		res := []int{}
-		for _, v := range C {
-			res = append(res, v)
-		}
-		slices.Sort(res)
-		for _, S := range handscores {
-			if reflect.DeepEqual(res, S.hand) {
-				return S.strength
-			}
-		}
-		return 0
-	}
-	slices.SortFunc(hands, func(a, b Hand) int {
-		Ca := Counter(a)
-		Cb := Counter(b)
-		if Ca < Cb {
-			return -1
-		}
-		if Ca > Cb {
-			return 1
-		}
-		// If we get here, they have the same score, and so need to iterate through the cards
-		for i := 0; i < len(a.hand); i++ {
-			if a.hand[i] < b.hand[i] {
-				return -1
-			}
-			if a.hand[i] > b.hand[i] {
-				return 1
+		
+		// Same strength, compare cards in order
+		for i := 0; i < 5; i++ {
+			if a.cards[i] != b.cards[i] {
+				return a.cards[i] - b.cards[i]
 			}
 		}
 		return 0
 	})
-	res := 0
-	for i, H := range hands {
-		res += (i + 1) * H.bid
+	
+	result := 0
+	for i, h := range sortedHands {
+		result += (i + 1) * h.bid
 	}
-	return res
+	return result
 }
