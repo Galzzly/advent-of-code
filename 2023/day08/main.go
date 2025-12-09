@@ -1,10 +1,8 @@
 package main
 
 import (
-	"aocli/utils"
 	_ "embed"
 	"os"
-	"strings"
 )
 
 //go:embed input.txt
@@ -26,51 +24,76 @@ func main() {
 	println(answer)
 }
 
-type Maps map[rune]map[string]string
+type Node struct {
+	left  string
+	right string
+}
 
-func solve(input string, suffix string) int {
-	lines := strings.Split(strings.TrimSpace(input), "\n\n")
-	instr := []rune(lines[0])
-	maps := buildMaps(lines[1])
-	P := []string{}
-	for p := range maps['L'] {
-		if strings.HasSuffix(p, suffix) {
-			P = append(P, p)
-		}
+var (
+	instructions string
+	network      map[string]Node
+	startNodes   []string
+)
+
+func parseInput(input string) {
+	i := 0
+	// Skip whitespace
+	for i < len(input) && (input[i] == ' ' || input[i] == '\n' || input[i] == '\r') {
+		i++
 	}
 
-	I := []int{}
-	i := 0
-	for {
-		NP := []string{}
-		for _, p := range P {
-			p = maps[instr[i%len(instr)]][p]
-			if strings.HasSuffix(p, "Z") {
-				I = append(I, i+1)
-				if len(I) == len(P) {
-					return utils.LCM(1, I[0], I[1:]...)
-				}
-			}
-			NP = append(NP, p)
-		}
-		P = NP
+	// Parse instructions
+	start := i
+	for i < len(input) && input[i] != '\n' {
 		i++
+	}
+	instructions = input[start:i]
+
+	// Skip blank lines
+	for i < len(input) && (input[i] == '\n' || input[i] == '\r') {
+		i++
+	}
+
+	// Parse network
+	network = make(map[string]Node)
+	startNodes = make([]string, 0, 6)
+
+	for i < len(input) {
+		if input[i] == '\n' || input[i] == '\r' {
+			i++
+			continue
+		}
+
+		// Parse: "AAA = (BBB, CCC)"
+		name := input[i : i+3]
+		i += 7 // Skip " = ("
+		left := input[i : i+3]
+		i += 5 // Skip ", "
+		right := input[i : i+3]
+		i += 4 // Skip ")\n"
+
+		network[name] = Node{left: left, right: right}
+		if name[2] == 'A' {
+			startNodes = append(startNodes, name)
+		}
 	}
 }
 
-func buildMaps(line string) Maps {
-	lines := strings.Split(line, "\n")
-	maps := make(map[rune]map[string]string, 2)
-	maps['L'] = make(map[string]string, len(lines))
-	maps['R'] = make(map[string]string, len(lines))
-	for _, line := range lines {
-		s := strings.Split(line, " = ")
-		I := s[0]
-		lr := strings.Split(s[1], ", ")
-		L := lr[0][1:]
-		R := lr[1][:3]
-		maps['L'][I] = L
-		maps['R'][I] = R
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
 	}
-	return maps
+	return a
+}
+
+func lcm(a, b int) int {
+	return a * b / gcd(a, b)
+}
+
+func lcmSlice(nums []int) int {
+	result := nums[0]
+	for i := 1; i < len(nums); i++ {
+		result = lcm(result, nums[i])
+	}
+	return result
 }
