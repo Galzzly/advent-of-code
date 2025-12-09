@@ -18,16 +18,16 @@ func doPartTwo() int {
 		}
 		sortedHands[i] = newHand
 	}
-	
+
 	slices.SortFunc(sortedHands, func(a, b Hand) int {
 		// Compare hand strengths with joker rule
 		sa := getHandStrength(a, true)
 		sb := getHandStrength(b, true)
-		
+
 		if sa != sb {
 			return sa - sb
 		}
-		
+
 		// Same strength, compare cards in order
 		for i := 0; i < 5; i++ {
 			if a.cards[i] != b.cards[i] {
@@ -36,7 +36,7 @@ func doPartTwo() int {
 		}
 		return 0
 	})
-	
+
 	result := 0
 	for i, h := range sortedHands {
 		result += (i + 1) * h.bid

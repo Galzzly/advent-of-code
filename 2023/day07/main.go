@@ -38,23 +38,23 @@ func main() {
 func parseInput(input string) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 	hands = make([]Hand, len(lines))
-	
+
 	for i, line := range lines {
 		spaceIdx := strings.Index(line, " ")
-		
+
 		// Parse hand
 		var h Hand
 		for j := 0; j < 5; j++ {
 			h.cards[j] = cardValue(line[j])
 		}
-		
+
 		// Parse bid
 		bid := 0
 		for j := spaceIdx + 1; j < len(line); j++ {
 			bid = bid*10 + int(line[j]-'0')
 		}
 		h.bid = bid
-		
+
 		hands[i] = h
 	}
 }
@@ -104,30 +104,30 @@ func handStrength(counts [5]int) int {
 func getHandStrength(h Hand, jokerRule bool) int {
 	counts := [5]int{}
 	cardCounts := make(map[int]int)
-	
+
 	for _, card := range h.cards {
 		cardCounts[card]++
 	}
-	
+
 	// Handle jokers (value 11 in part 1, converted to 1 in part 2)
 	jokers := 0
 	if jokerRule {
 		jokers = cardCounts[1]
 		delete(cardCounts, 1)
 	}
-	
+
 	// Fill counts array
 	i := 0
 	for _, count := range cardCounts {
 		counts[i] = count
 		i++
 	}
-	
+
 	// Add jokers to the highest count
 	if jokers > 0 {
 		slices.Sort(counts[:])
 		counts[4] += jokers
 	}
-	
+
 	return handStrength(counts)
 }
