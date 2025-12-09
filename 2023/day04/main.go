@@ -1,11 +1,9 @@
 package main
 
 import (
-	"aocli/utils"
 	_ "embed"
 	"os"
 	"strings"
-	"sync"
 )
 
 //go:embed input.txt
@@ -14,76 +12,67 @@ var input string
 //go:embed input_test.txt
 var inputTest string
 
+var cardWins []int
+
 func main() {
 	// Check argv if we use test input or not
 	if len(os.Args) > 1 && os.Args[1] == "test" {
 		input = inputTest
 	}
 
-	answer := doPartOne(input)
+	parseCards(input)
+
+	answer := doPartOne()
 	println(answer)
 
-	answer = doPartTwo(input)
+	answer = doPartTwo()
 	println(answer)
 }
 
-type scratchcards map[int]int
-type scratchcard struct {
-	id, winners int
-}
-
-func parseCards(input string) scratchcards {
+func parseCards(input string) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
-	var wg sync.WaitGroup
-	cards := make(chan scratchcard, len(lines))
-	scratchcards := make(map[int]int)
-	for _, line := range lines {
-		wg.Add(1)
-		go parseCard(line, cards, &wg)
-	}
+	cardWins = make([]int, len(lines))
 
-	go func() {
-		wg.Wait()
-		close(cards)
-	}()
+	for i, line := range lines {
+		colonIdx := strings.Index(line, ": ")
+		pipeIdx := strings.Index(line, " | ")
 
-	for card := range cards {
-		scratchcards[card.id] = card.winners
-	}
-	return scratchcards
-}
-
-func parseCard(line string, cards chan scratchcard, wg *sync.WaitGroup) {
-	defer wg.Done()
-	s := strings.Split(line, ": ")
-	numbers := strings.Split(s[1], "|")
-	winners := getNumbers(numbers[0])
-	nums := getNumbers(numbers[1])
-	var ret scratchcard
-	ret.id = utils.Atoi(strings.Fields(s[0])[1])
-	ret.winners = 0
-	for _, n := range nums {
-		if checkNum(winners, n) {
-			ret.winners++
+		// Parse winning numbers into a set
+		winSet := make(map[int]bool, 10)
+		numStr := line[colonIdx+2 : pipeIdx]
+		j := 0
+		for j < len(numStr) {
+			if numStr[j] >= '0' && numStr[j] <= '9' {
+				num := 0
+				for j < len(numStr) && numStr[j] >= '0' && numStr[j] <= '9' {
+					num = num*10 + int(numStr[j]-'0')
+					j++
+				}
+				winSet[num] = true
+			} else {
+				j++
+			}
 		}
-	}
-	cards <- ret
-}
 
-func getNumbers(nums string) []int {
-	s := strings.Fields(strings.TrimSpace(nums))
-	ret := make([]int, 0)
-	for _, n := range s {
-		ret = append(ret, utils.Atoi(n))
-	}
-	return ret
-}
-
-func checkNum(nums []int, num int) bool {
-	for _, n := range nums {
-		if n == num {
-			return true
+		// Check your numbers against winning set
+		wins := 0
+		numStr = line[pipeIdx+3:]
+		j = 0
+		for j < len(numStr) {
+			if numStr[j] >= '0' && numStr[j] <= '9' {
+				num := 0
+				for j < len(numStr) && numStr[j] >= '0' && numStr[j] <= '9' {
+					num = num*10 + int(numStr[j]-'0')
+					j++
+				}
+				if winSet[num] {
+					wins++
+				}
+			} else {
+				j++
+			}
 		}
+
+		cardWins[i] = wins
 	}
-	return false
 }
