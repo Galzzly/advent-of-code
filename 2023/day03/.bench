@@ -1,1 +1,1 @@
-{"Lines":[{"Name":"Part 1","N":574,"NsPerOp":1900607,"AllocedBytesPerOp":0,"AllocsPerOp":0,"MBPerS":0,"Measured":1,"Ord":0},{"Name":"Part 2","N":574,"NsPerOp":2085721,"AllocedBytesPerOp":0,"AllocsPerOp":0,"MBPerS":0,"Measured":1,"Ord":0}],"Measured":1}
+{"Lines":[{"Name":"Part 1","N":23079,"NsPerOp":50711,"AllocedBytesPerOp":0,"AllocsPerOp":0,"MBPerS":0,"Measured":1,"Ord":0},{"Name":"Part 2","N":8572,"NsPerOp":134099,"AllocedBytesPerOp":0,"AllocsPerOp":0,"MBPerS":0,"Measured":1,"Ord":0}],"Measured":1}
