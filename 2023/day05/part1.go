@@ -1,34 +1,23 @@
 package main
 
-import (
-	"aocli/utils"
-	"strings"
-	"sync"
-)
+func doPartOne() int {
+	minLoc := int(^uint(0) >> 1) // Max int
 
-func doPartOne(input string) int {
-	lines := strings.Split(strings.TrimSpace(input), "\n\n")
-	var wg sync.WaitGroup
-	wg.Add(2)
-	seeds = Seeds{}
-	maps = Maps{}
-	go populateSeeds(lines[0], &wg)
-	go populateMaps(lines[1:], &wg)
-	wg.Wait()
-
-	S := []int{}
 	for _, seed := range seeds {
+		val := seed
 	nextmap:
-		for _, tMap := range maps {
-			for _, ttMap := range tMap {
-				if ttMap.src <= seed && seed < ttMap.src+ttMap.size {
-					seed = ttMap.dest + seed - ttMap.src
+		for _, m := range maps {
+			for _, mapping := range m {
+				if mapping.src <= val && val < mapping.src+mapping.size {
+					val = mapping.dest + val - mapping.src
 					continue nextmap
 				}
 			}
 		}
-		S = append(S, seed)
+		if val < minLoc {
+			minLoc = val
+		}
 	}
-	res, _ := utils.MinMax(S)
-	return res
+
+	return minLoc
 }
