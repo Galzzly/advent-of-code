@@ -33,7 +33,7 @@ Here you can put a simple description and anything you want really!
 | [Day 7](/2025/day07) | `960.01 μs` | `1.05 ms`|
 | [Day 8](/2025/day08) | `693.30 μs` | `695.12 μs`|
 | [Day 9](/2025/day09) | `236.84 μs` | `33.96 ms`|
-| [Day 10](/2025/day10) | | |
+| [Day 10](/2025/day10) | `1.79 ms` | `14.47 ms`|
 | [Day 11](/2025/day11) | `126.03 μs` | `345.19 μs`|
 | [Day 12](/2025/day12) | | |
 | [Day 13](/2025/day13) | | |
