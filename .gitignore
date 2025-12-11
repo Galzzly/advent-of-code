@@ -24,3 +24,4 @@ template/.config
 # Excluding the input data
 input.txt
 input_test.txt
+input_test2.txt
