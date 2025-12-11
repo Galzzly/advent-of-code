@@ -46,10 +46,10 @@ func doPartTwo(input string) int {
 				targetJoltages = append(targetJoltages, utils.Atoi(c))
 			}
 
-			// Solve for minimum presses to reach joltages
-			score, possible := minpresses.SolveMinPresses(buttonPositions, targetJoltages)
+			// Solve for minimum presses using linear solver
+			score, possible := minpresses.SolveMinPressesLinear(buttonPositions, targetJoltages)
 			if !possible {
-				score = 0 // No solution
+				score = 0
 			}
 
 			results <- result{index: index, score: score, line: line}
