@@ -1,6 +1,10 @@
 package graph
 
-import "image"
+import (
+	"container/heap"
+	"image"
+	"math"
+)
 
 type Queue[T any] []T
 
@@ -91,4 +95,171 @@ func Search(g Graph, s, e image.Point) (res []image.Point) {
 		res = append(res, *p)
 	}
 	return
+}
+
+// PriorityQueueItem represents an item in the priority queue
+type PriorityQueueItem struct {
+	Node     string
+	Distance int
+	Index    int
+}
+
+// PriorityQueue implements heap.Interface for Dijkstra's algorithm
+type PriorityQueue []*PriorityQueueItem
+
+func (pq PriorityQueue) Len() int { return len(pq) }
+
+func (pq PriorityQueue) Less(i, j int) bool {
+	return pq[i].Distance < pq[j].Distance
+}
+
+func (pq PriorityQueue) Swap(i, j int) {
+	pq[i], pq[j] = pq[j], pq[i]
+	pq[i].Index = i
+	pq[j].Index = j
+}
+
+func (pq *PriorityQueue) Push(x interface{}) {
+	n := len(*pq)
+	item := x.(*PriorityQueueItem)
+	item.Index = n
+	*pq = append(*pq, item)
+}
+
+func (pq *PriorityQueue) Pop() interface{} {
+	old := *pq
+	n := len(old)
+	item := old[n-1]
+	old[n-1] = nil
+	item.Index = -1
+	*pq = old[0 : n-1]
+	return item
+}
+
+// Dijkstra finds the shortest path from start to end node
+// graph is a map of node -> list of connected nodes
+// Returns the distance to the end node, or -1 if no path exists
+func Dijkstra(graph map[string][]string, start, end string) int {
+	distances := make(map[string]int)
+
+	// Initialize distances for all nodes in the graph
+	for node := range graph {
+		distances[node] = math.MaxInt32
+	}
+	distances[start] = 0
+
+	// Also ensure end node exists in distances even if it has no outgoing edges
+	if _, exists := distances[end]; !exists {
+		distances[end] = math.MaxInt32
+	}
+
+	pq := make(PriorityQueue, 0)
+	heap.Init(&pq)
+	heap.Push(&pq, &PriorityQueueItem{
+		Node:     start,
+		Distance: 0,
+	})
+
+	visited := make(map[string]bool)
+
+	for pq.Len() > 0 {
+		current := heap.Pop(&pq).(*PriorityQueueItem)
+
+		if current.Node == end {
+			return current.Distance
+		}
+
+		if visited[current.Node] {
+			continue
+		}
+		visited[current.Node] = true
+
+		for _, neighbor := range graph[current.Node] {
+			if visited[neighbor] {
+				continue
+			}
+
+			newDist := current.Distance + 1 // Each edge has weight 1
+
+			if newDist < distances[neighbor] {
+				distances[neighbor] = newDist
+				heap.Push(&pq, &PriorityQueueItem{
+					Node:     neighbor,
+					Distance: newDist,
+				})
+			}
+		}
+	}
+
+	// No path found
+	return -1
+}
+
+// DijkstraWithPath finds the shortest path and returns both distance and the path
+func DijkstraWithPath(graph map[string][]string, start, end string) (int, []string) {
+	distances := make(map[string]int)
+	previous := make(map[string]string)
+
+	// Initialize distances for all nodes in the graph
+	for node := range graph {
+		distances[node] = math.MaxInt32
+	}
+	distances[start] = 0
+
+	// Also ensure end node exists in distances even if it has no outgoing edges
+	if _, exists := distances[end]; !exists {
+		distances[end] = math.MaxInt32
+	}
+
+	pq := make(PriorityQueue, 0)
+	heap.Init(&pq)
+	heap.Push(&pq, &PriorityQueueItem{
+		Node:     start,
+		Distance: 0,
+	})
+
+	visited := make(map[string]bool)
+
+	for pq.Len() > 0 {
+		current := heap.Pop(&pq).(*PriorityQueueItem)
+
+		if current.Node == end {
+			// Reconstruct path
+			path := []string{}
+			node := end
+			for node != "" {
+				path = append([]string{node}, path...)
+				prev, exists := previous[node]
+				if !exists {
+					break
+				}
+				node = prev
+			}
+			return current.Distance, path
+		}
+
+		if visited[current.Node] {
+			continue
+		}
+		visited[current.Node] = true
+
+		for _, neighbor := range graph[current.Node] {
+			if visited[neighbor] {
+				continue
+			}
+
+			newDist := current.Distance + 1
+
+			if newDist < distances[neighbor] {
+				distances[neighbor] = newDist
+				previous[neighbor] = current.Node
+				heap.Push(&pq, &PriorityQueueItem{
+					Node:     neighbor,
+					Distance: newDist,
+				})
+			}
+		}
+	}
+
+	return -1, nil
 }

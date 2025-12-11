@@ -26,15 +26,50 @@ func (p Polygon) Copy() Polygon {
 }
 
 func (pf *Polyfence) Inside(P image.Point) bool {
+	// First check if point is on an edge
+	if pf.OnEdge(P) {
+		return true
+	}
 	return !(checkOutside(pf.p, P) == 0)
+}
+
+func (pf *Polyfence) OnEdge(P image.Point) bool {
+	n := len(pf.p) - 1
+	for i := 0; i < n; i++ {
+		p1, p2 := pf.p[i], pf.p[i+1]
+
+		// Check if P is on the line segment from p1 to p2
+		// Point is on segment if it's collinear and between p1 and p2
+
+		// Check if collinear using cross product
+		cross := (p2.X-p1.X)*(P.Y-p1.Y) - (P.X-p1.X)*(p2.Y-p1.Y)
+		if cross != 0 {
+			continue
+		}
+
+		// Check if P is between p1 and p2
+		minX, maxX := p1.X, p2.X
+		if minX > maxX {
+			minX, maxX = maxX, minX
+		}
+		minY, maxY := p1.Y, p2.Y
+		if minY > maxY {
+			minY, maxY = maxY, minY
+		}
+
+		if P.X >= minX && P.X <= maxX && P.Y >= minY && P.Y <= maxY {
+			return true
+		}
+	}
+	return false
 }
 
 func checkOutside(p Polygon, P image.Point) (res int) {
 	if len(p) < 3 {
 		return 0
 	}
-	edges := len(p) - 2
-	for i := 0; i <= edges; i++ {
+	n := len(p) - 1 // Since we append first point to close, check all edges
+	for i := 0; i < n; i++ {
 		if p[i].Y <= P.Y {
 			if p[i+1].Y > P.Y {
 				if isLeft(p[i], p[i+1], P) > 0 {
