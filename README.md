@@ -1,5 +1,5 @@
 ![](https://img.shields.io/github/last-commit/Galzzly/advent-of-code?style=flat-square)
-![](https://img.shields.io/badge/day%20📅-%!s(int=11)-blue)
+![](https://img.shields.io/badge/day%20📅-%!s(int=12)-blue)
 ![](https://img.shields.io/badge/stars%20⭐-0-yellow)
 ![](https://img.shields.io/badge/days%20completed-0-red)
 
@@ -35,7 +35,7 @@ Here you can put a simple description and anything you want really!
 | [Day 9](/2025/day09) | `236.84 μs` | `33.96 ms`|
 | [Day 10](/2025/day10) | `1.79 ms` | `14.47 ms`|
 | [Day 11](/2025/day11) | `126.03 μs` | `345.19 μs`|
-| [Day 12](/2025/day12) | | |
+| [Day 12](/2025/day12) | `373.35 μs`|
 | [Day 13](/2025/day13) | | |
 | [Day 14](/2025/day14) | | |
 | [Day 15](/2025/day15) | | |
