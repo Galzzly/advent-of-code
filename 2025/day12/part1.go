@@ -47,8 +47,8 @@ func doPartOne(input string) int {
 			totalpresentarea += utils.Atoi(numStr) * presents[i]
 		}
 
-		// Check if sleigh has enough space
-		if totalpresentarea <= area && area > totalpresentarea+(totalpresentarea/5) {
+		// Check if sleigh has enough space (area > 120% of presents)
+		if area > totalpresentarea+(totalpresentarea/5) {
 			ans++
 		}
 	}
